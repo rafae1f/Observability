@@ -250,6 +250,6 @@ Executar
 docker-compose up -d
 ```
 
-Acessar no navegador o endereço IPv4 público da instância EC2 na porta 8080
+Acessar no navegador o endereço IPv4 público da instância EC2 na porta 9000
 
 Ex: 12.123.123.123:9000
