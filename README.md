@@ -47,12 +47,6 @@ Ativar bash
 ```
 bash
 ```
-Acessar diretorio home
-```
-cd
-```
-
-sudo -i = modo sudo (Não é necessário)
 
 Atualizar os pacotes de instalação
 ```
