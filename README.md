@@ -115,8 +115,7 @@ Subir container com nginx
 docker container run --name meucontainer -d -p 8080:80 nginx
 ```
 
-Listar todos os containers
--a = Listar todos ativos e inativos
+Listar containers -a = Listar todos ativos e inativos
 ```
 docker container ls -a
 ```
