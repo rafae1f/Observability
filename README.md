@@ -415,3 +415,12 @@ Prometheus: ip:9000
 cAdvisor: ip:8080
 Grafana: ip:3000
 AlertManager: ip:9093
+
+Obs caso apresente algum erro use esse comando para remover todos os containers
+```bash
+docker container rm -f $(docker container ls -a -q)
+```
+Execute novamente o docker-compose para subir os containers novamente
+```bash
+docker-compose up -d
+```
