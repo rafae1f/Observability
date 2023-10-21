@@ -368,6 +368,7 @@ cd
 cd grafana
 ```
 
+criar diretório provisioning e datasources
 ```bash
 mkdir provisioning
 ```
@@ -375,8 +376,6 @@ mkdir provisioning
 ```bash
 mkdir datasources
 ```
-
-criar diretório provisioning e datasources
 
 criar file prometheus_ds.yml adicionar conteúdo com o vim
 ```bash
