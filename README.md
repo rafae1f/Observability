@@ -333,13 +333,14 @@ networks:
   backend:
 ```
 
+Criar diretório do alertmanager 
 ```bash
 mkdir alertmanager
 ```
 
-Criar diretório do alertmanager 
+Navegar para o diretório
 ```bash
-mkdir alertmanager
+cd alertmanager
 ```
 
 Criar file alertmanager.yml e incluir o conteudo utilizando o vim
@@ -388,7 +389,7 @@ Criar diretório datasources
 mkdir datasources
 ```
 
-Navegar dentro do diretório
+Navegar para o diretório
 ```bash
 cd datasources
 ```
