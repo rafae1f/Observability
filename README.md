@@ -361,7 +361,7 @@ receivers:
 
 acessar o diretorio grafana
 
-Retornas ao diretório padrão
+Retornar ao diretório padrão
 ```bash
 cd
 ```
@@ -409,3 +409,9 @@ Executar para fazer as alterações
 ```bash
 docker-compose up -d
 ```
+
+Edereços de acesso:
+Prometheus: ip:9000
+cAdvisor: ip:8080
+Grafana: ip:3000
+AlertManager: ip:9093
