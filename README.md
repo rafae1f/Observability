@@ -411,10 +411,10 @@ docker-compose up -d
 ```
 
 Edereços de acesso:
-Prometheus: ip:9000
-cAdvisor: ip:8080
-Grafana: ip:3000
-AlertManager: ip:9093
+- Prometheus: ip:9000
+- cAdvisor: ip:8080
+- Grafana: ip:3000
+- AlertManager: ip:9093
 
 Obs caso apresente algum erro use esse comando para remover todos os containers
 ```bash
