@@ -249,7 +249,7 @@ groups:
         for: 5m
 ```
 
-Executar
+Executar (Subir tudo utilizando o compose)
 
 ```bash
 docker-compose up -d
@@ -258,3 +258,142 @@ docker-compose up -d
 Acessar no navegador o endereço IPv4 público da instância EC2 na porta 9000
 
 Ex: 12.123.123.123:9000
+
+Atualizar o conteudo do docker-compose.yml utilizando vim
+```yaml
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus:v2.46.0
+    ports:
+      - 9000:9090
+    networks:
+      - backend
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    hostname: '{{.Node.ID}}'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backend
+    deploy:
+      mode: global
+    ports:
+      - 8080:8080
+
+  grafana:
+    image: grafana/grafana:10.0.0
+    ports:
+      - 3000:3000
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+
+  alertmanager:
+    image: prom/alertmanager:v0.25.0
+    networks:
+      - backend
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+      - alertmanager-data:/data
+    command: --config.file=/etc/alertmanager/alertmanager.yml
+
+  nginx:
+    image: nginx
+    ports:
+        - 80:80
+    networks:
+        - backend
+
+volumes:
+  prometheus-data:
+  grafana-data:
+  alertmanager-data:
+
+networks:
+  frontend:
+  backend:
+```
+
+```bash
+mkdir alertmanager
+```
+
+Criar diretório do alertmanager 
+```bash
+mkdir alertmanager
+```
+
+Criar file alertmanager.yml e incluir o conteudo utilizando o vim
+```bash
+touch alertmanager.yml
+```
+
+alertmanager.yml
+```yaml
+route:
+  receiver: 'mail'
+
+receivers:
+  - name: 'mail'
+    email_configs:
+      - smarthost: 'smtp.gmail.com:587'
+        from: 'your_mail@gmail.com'
+        to: 'some_mail@gmail.com'
+        auth_username: '...'
+        auth_password: '...'
+```
+
+acessar o diretorio grafana
+```bash
+cd
+```
+
+```bash
+cd grafana
+```
+
+```bash
+mkdir provisioning
+```
+
+```bash
+mkdir datasources
+```
+
+criar diretório provisioning e datasources
+
+criar file prometheus_ds.yml adicionar conteúdo com o vim
+```bash
+touch prometheus_ds.yml
+```
+
+prometheus_ds.yml
+```yaml
+datasources:
+  - name: Prometheus
+    access: proxy
+    type: prometheus
+    url: http://prometheus:9090
+    isDefault: true
+```
+
+Executar para fazer as alterações
+```bash
+docker-compose up -d
+```
