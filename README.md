@@ -379,7 +379,7 @@ Criar diretório provisioning
 mkdir provisioning
 ```
 
-Navegar dentro do diretório
+Navegar para o diretório
 ```bash
 cd provisioning
 ```
