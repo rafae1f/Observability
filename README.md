@@ -360,6 +360,8 @@ receivers:
 ```
 
 acessar o diretorio grafana
+
+Retornas ao diretório padrão
 ```bash
 cd
 ```
@@ -368,13 +370,24 @@ cd
 cd grafana
 ```
 
-criar diretório provisioning e datasources
+Criar diretório provisioning
 ```bash
 mkdir provisioning
 ```
 
+Navegar dentro do diretório
+```bash
+cd provisioning
+```
+
+Criar diretório datasources
 ```bash
 mkdir datasources
+```
+
+Navegar dentro do diretório
+```bash
+cd datasources
 ```
 
 criar file prometheus_ds.yml adicionar conteúdo com o vim
