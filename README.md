@@ -57,7 +57,7 @@ Instalar a versão mais recente da engine otimizada para Amazon Linux 2 AMI
 sudo amazon-linux-extras install docker
 ```
 
-Ou para Amazon Linux 2023 AMI
+OU para Amazon Linux 2023 AMI
 ```
 yum install docker -y
 ```
@@ -259,6 +259,8 @@ docker-compose up -d
 Acessar no navegador o endereço IPv4 público da instância EC2 na porta 9000
 
 Ex: 12.123.123.123:9000
+
+### AULA 2
 
 Atualizar o conteudo do docker-compose.yml utilizando vim
 ```yaml
