@@ -56,7 +56,8 @@ Instalar a versão mais recente da engine otimizada para Amazon Linux 2 AMI
 ```
 sudo amazon-linux-extras install docker
 ```
-Ou Amazon Linux 2023 AMI
+
+Ou para Amazon Linux 2023 AMI
 ```
 yum install docker -y
 ```
