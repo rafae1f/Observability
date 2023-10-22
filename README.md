@@ -418,8 +418,8 @@ Edereços de acesso:
 - Prometheus: ip:9000
 - cAdvisor: ip:8080
 - Grafana: ip:3000
-  - Username: Admin
-  - Password: Admin
+  - Username: admin
+  - Password: admin
 - AlertManager: ip:9093
 
 Obs caso apresente algum erro use esse comando para remover todos os containers
