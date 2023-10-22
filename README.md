@@ -426,7 +426,7 @@ Obs caso apresente algum erro use esse comando para remover todos os containers
 ```bash
 docker container rm -f $(docker container ls -a -q)
 ```
-Execute novamente o docker-compose para subir os containers novamente
+Execute o docker-compose para subir os containers novamente
 ```bash
 docker-compose up -d
 ```
