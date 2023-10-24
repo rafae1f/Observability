@@ -450,7 +450,9 @@ Datasource: Prometheus
 #### PromQL:
 
 Qtd containers:
-```count(rate(container_last_seen{name=~".+"}[1m]))```
+```
+count(rate(container_last_seen{name=~".+"}[1m]))
+```
 
 Memoria:
 ```
