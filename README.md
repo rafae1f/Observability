@@ -430,3 +430,36 @@ Execute o docker-compose para subir os containers novamente
 ```bash
 docker-compose up -d
 ```
+
+### AULA 3
+
+Iniciar containers
+```bash
+docker-compose up -d
+```
+
+Verificar security group da EC2 se a regra de entrada personalizada esta setada para meu ip **recente**.
+Obs. Os provedores de internet costumam trocar o ip quando o modem é reiniciado.
+
+Acessar o Grafana
+ip:3000
+
+Dashboard > New Dashboard
+Datasource: Prometheus
+
+#### PromQL:
+
+Qtd containers:
+```count(rate(container_last_seen{name=~".+"}[1m]))```
+
+Memoria:
+```(container_memory_usage_bytes{container_label_com_docker_compose_service=~"alertmanager|cadvisor|grafana|nginx|prometheus",image!=""} - container_memory_cache{container_label_com_docker_compose_service=~"alertmanager|cadvisor|grafana|nginx|prometheus",image!=""})```
+
+CPU:
+```(rate(container_cpu_user_seconds_total{container_label_com_docker_compose_service=~"alertmanager|cadvisor|grafana|nginx|prometheus",image!=""}[5m]) * 100)```
+
+Trafego Entrada:
+```sum(rate(container_network_receive_bytes_total{name=~".+"}[1m])) by (name)```
+
+Trafego Saída:
+```sum(rate(container_network_transmit_bytes_total{name=~".+"}[1m])) by (name)```
