@@ -739,7 +739,7 @@ Build da imagem do container
 docker build -f Dockerfile . -t segundo-exporter:0.1
 ```
 
-Verificar se a imagem primeiro-exporter foi criada
+Verificar se a imagem segundo-exporter foi criada
 ```
 docker image ls
 ```
