@@ -721,7 +721,7 @@ sudo vim Dockerfile
 FROM python:3.8-slim
 
 # Adicionando algumas labels para identificar a imagem
-LABEL description "Dockerfile para criar o nosso terceiro  exporter para o Prometheus"
+LABEL description "Dockerfile para criar o nosso segundo  exporter para o Prometheus"
 
 # Adicionando o exporter.py para a nossa imagem
 COPY . .
