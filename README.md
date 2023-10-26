@@ -636,3 +636,134 @@ reiniciar o container do prometheus para capturar novas metricas
 docker container restart idprometheus
 ```
 
+#### HTTP
+```
+mkdir http
+```
+```
+cd http
+```
+```
+touch exporter_chamada_http.py requirements.txt Dockerfile
+```
+Adicionar conteúdos
+
+```
+sudo vim exporter_chamada_http.py
+```
+```
+#!/usr/bin/env python
+
+import os
+import re
+import platform
+from time import sleep
+
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+from prometheus_client import start_http_server, Counter, REGISTRY
+
+class HTTPRequestHandler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type','text/html')
+            self.end_headers()
+            self.wfile.write(bytes("<b> Hello World !</b>", "utf-8"))
+            request_counter.labels(status_code='200', instance=platform.node()).inc()
+        else:
+            self.send_error(404)
+            request_counter.labels(status_code='404', instance=platform.node()).inc()
+
+
+if __name__ == '__main__':
+
+    start_http_server(9000)
+    request_counter = Counter('http_requests', 'HTTP request', ["status_code", "instance"])
+
+    webServer = HTTPServer(("localhost", 8888), HTTPRequestHandler).serve_forever()
+    print("Server started")
+```
+
+```
+sudo vim requirements.txt
+```
+```
+requests
+prometheus-client
+prometheus_client
+```
+
+```
+sudo vim Dockerfile
+```
+```
+# Vamos utilizar a imagem slim do Python
+FROM python:3.8-slim
+
+# Adicionando algumas labels para identificar a imagem
+LABEL description "Dockerfile para criar o nosso terceiro  exporter para o Prometheus"
+
+# Adicionando o exporter.py para a nossa imagem
+COPY . .
+
+# Instalando as bibliotecas necessárias para o exporter
+# através do `requirements.txt`.
+RUN pip3 install -r requirements.txt
+
+# Executando o exporter
+CMD python3 exporter_chamada_http.py
+```
+
+Build da imagem do container
+```
+docker build -f Dockerfile . -t segundo-exporter:0.1
+```
+
+Verificar se a imagem primeiro-exporter foi criada
+```
+docker image ls
+```
+
+```
+cd
+```
+
+```
+sudo vim docker-compose.yml
+```
+docker-compose.yml(**Adicionar**)
+```
+  apipython:
+    image: segundo-exporter:0.1
+    ports:
+      - 8888:8888
+    networks:
+      - backend
+```
+
+Subir o container
+```
+docker-compose up -d
+```
+
+```
+sudo vim prometheus/prometheus.yml
+```
+prometheus.yml(**Adicionar**)
+```
+  - job_name: "Segundo Exporter" # Nome do job que vai coletar as métricas do primeiro exporter.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['apipython:9000'] # Endereço do alvo monitorado, ou seja, o nosso primeiro exporter.
+```
+
+Mostrar containers ativos e suas ids
+```
+docker container ps
+```
+reiniciar o container do prometheus para capturar novas metricas
+```
+docker container restart idprometheus
+```
