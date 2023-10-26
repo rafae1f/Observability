@@ -492,9 +492,11 @@ Criar arquivos
 ```
 touch exporter_novo.py requirements.txt Dockerfile
 ```
-adicionar o conteúdo com o vim
-
-exporter_novo.py
+Adicionar os conteúdos com o vim
+```
+sudo vim exporter_novo.py
+```
+exporter_novo.py(**Criar**)
 ```
 import requests # Importa o módulo requests para fazer requisições HTTP
 import json # Importa o módulo json para converter o resultado em JSON
@@ -556,14 +558,20 @@ if __name__ == '__main__':
     exit(0)
 ```
 
-requirements.txt
+```
+sudo vim requirements.txt
+```
+requirements.txt(**Criar**)
 ```
 requests
 prometheus-client
 prometheus_client
 ```
 
-Dockerfile
+```
+sudo vim Dockerfile
+```
+Dockerfile(**Criar**)
 ```
 FROM python:3.8-slim
 
@@ -595,6 +603,7 @@ Retornar ao diretorio raiz
 ```
 cd
 ```
+
 Editar docker-compose.yml e **adicionar conteúdo** referente a nova api, imagem container, portas e rede
 ```
 sudo vim docker-compose.yml
@@ -608,16 +617,16 @@ docker-compose.yml (**Adicionar**)
     networks:
       - backend
 ```
-Subir o container
+
+Executar o container
 ```
 docker-compose up -d
 ```
 
-adicionar conteúdo prometheus.yml
+Editar prometheus.yml e **adicionar conteúdo** referente ao job e target
 ```
 sudo vim prometheus/prometheus.yml
 ```
-
 prometheus.yml(**Adicionar**)
 ```
   - job_name: "Primeiro Exporter" # Nome do job que vai coletar as métricas do primeiro exporter.
