@@ -1,4 +1,5 @@
 # AWS - OBSERVABILITY
+![Estrutura de pastas](tree.png)
 
 ## IAM - Criar função para conectar a instância EC2 através do Systems Manager (SSM)
 
