@@ -1,0 +1,6 @@
+  apipython:
+    image: segundo-exporter:0.1
+    ports:
+      - 8888:8888
+    networks:
+      - backend

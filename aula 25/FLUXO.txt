@@ -1,0 +1,24 @@
+Comandos e Fluxo:
+
+Passo 01: Criar o arquivo python (conteudo)
+Passo 02: Criar o arquivo requirements.txt (conteudo)
+Passo 03: Criar o Dockerfile (conteudo)
+
+Passo 04: Criar a imagem com o código abaixo:
+docker build -f Dockerfile . -t quinto-exporter:0.1
+
+Passo 05:  Validar que a imagem foi criada:
+docker images
+
+Passo 06: Adicionar a chamada para essa imagem no docker-compose (conteudo)
+
+Passo 07: Subir as imagens via Compose
+docker-compose up -d
+
+Passo 08: Validar que o deploy aconteceu com sucesso:
+docker container ps
+
+Passo 09: Habilitar o exporter no prometheus/prometheus.yml
+
+Passo 10: Restart no prometheus
+docker container restart "id container"
