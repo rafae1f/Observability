@@ -473,3 +473,166 @@ Trafego Saída:
 ```
 sum(rate(container_network_transmit_bytes_total{name=~".+"}[1m])) by (name)
 ```
+
+### AULA 4
+
+#### Exporters
+```
+cd
+```
+Criar diretório para api
+```
+mkdir apiastronauta
+```
+Navegar para o diretório
+```
+cd apiastronauta
+```
+Criar arquivos
+```
+touch exporter_novo.py requirements.txt Dockerfile
+```
+adicionar o conteúdo com o vim
+
+exporter_novo.py
+```
+import requests # Importa o módulo requests para fazer requisições HTTP
+import json # Importa o módulo json para converter o resultado em JSON
+import time # Importa o módulo time para fazer o sleep
+from prometheus_client import start_http_server, Gauge
+
+url_numero_pessoas = 'http://api.open-notify.org/astros.json'
+
+def pega_numero_astronautas():
+    try:
+        """
+        Pegar o número de astronautas no espaço
+        """
+        response = requests.get(url_numero_pessoas)
+        data = response.json()
+        return data['number']
+    except Exception as e:
+        print("Não foi possível acessar a url!")
+        raise e
+
+def atualiza_metricas():
+    try:
+        """
+        Atualiza as métricas com o número de astronautas e local da estação espacial internacional
+        """
+        numero_pessoas = Gauge('numero_de_astronautas', 'Número de astronautas no espaço')
+
+        while True:
+            numero_pessoas.set(pega_numero_astronautas())
+            time.sleep(10)
+            print("O número atual de astronautas no espaço é: %s" % pega_numero_astronautas())
+    except Exception as e:
+        print("A quantidade de astronautas não pode ser atualizada!")
+        raise e
+
+def inicia_exporter():
+    try:
+        """
+        Iniciar o exporter
+        """
+        start_http_server(8895)
+        return True
+    except Exception as e:
+        print("O Servidor não pode ser iniciado!")
+        raise e
+
+def main():
+    try:
+        inicia_exporter()
+        print('Exporter Iniciado')
+        atualiza_metricas()
+    except Exception as e:
+        print('\nExporter Falhou e Foi Finalizado! \n\n======> %s\n' % e)
+        exit(1)
+
+
+if __name__ == '__main__':
+    main()
+    exit(0)
+```
+
+requirements.txt
+```
+requests
+prometheus-client
+prometheus_client
+```
+
+Dockerfile
+```
+FROM python:3.8-slim
+
+# Adicionando algumas labels para identificar a imagem
+LABEL description "Dockerfile para criar o nosso primeiro  exporter para o Prometheus"
+
+# Adicionando o exporter.py para a nossa imagem
+COPY . .
+
+# Instalando as bibliotecas necessárias para o exporter
+# através do `requirements.txt`.
+RUN pip3 install -r requirements.txt
+
+# Executando o exporter
+CMD python3 exporter_novo.py
+```
+
+Build da imagem do container
+```
+docker build -f Dockerfile . -t primeiro-exporter:0.1
+```
+
+Verificar se a imagem primeiro-exporter foi criada
+```
+docker image ls
+```
+
+Retornar ao diretorio raiz
+```
+cd
+```
+Editar docker-compose.yml e **adicionar conteúdo** referente a nova api, imagem container, portas e rede
+```
+sudo vim docker-compose.yml
+```
+docker-compose.yml (**Adicionar**)
+```
+  apiastronauta:
+    image: primeiro-exporter:0.1
+    ports:
+      - 8895:8895
+    networks:
+      - backend
+```
+Subir o container
+```
+docker-compose up -d
+```
+
+adicionar conteúdo prometheus.yml
+```
+sudo vim prometheus/prometheus.yml
+```
+
+prometheus.yml(**Adicionar**)
+```
+  - job_name: "Primeiro Exporter" # Nome do job que vai coletar as métricas do primeiro exporter.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['apiastronauta:8895'] # Endereço do alvo monitorado, ou seja, o nosso primeiro exporter.
+```
+
+
+Mostrar containers ativos e suas ids
+```
+docker container ps
+```
+reiniciar o container do prometheus para capturar novas metricas
+```
+docker container restart idprometheus
+```
+
