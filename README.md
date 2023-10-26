@@ -645,6 +645,15 @@ reiniciar o container do prometheus para capturar novas metricas
 docker container restart idprometheus
 ```
 
+Para capturar metricas no Grafana:
+```
+numero_de_astronautas{job="Primeiro Exporter"}
+```
+label:
+```
+{{Instance}}
+```
+
 #### HTTP
 ```
 mkdir http
