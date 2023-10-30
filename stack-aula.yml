@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Provisionamento da infraestrutura para o projeto de Observabilidade
+Description: Provisionamento do ambiente de desenvolvimento para aula de Observabilidade 30-10-2023
 
 ################################### PARAMETERS ###################################
 
