@@ -125,8 +125,8 @@ Resources:
           sysctl -w vm.max_map_count=262144;
           echo "INSTANCE_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > .env
           docker-compose up -d
-          yum install telnet
-          yum install nc
+          yum install telnet -y
+          yum install nc -y
 
 ################################### STACK OUTPUTS ###################################
 
