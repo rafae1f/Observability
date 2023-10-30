@@ -1,6 +1,0 @@
-  apiastronauta:
-    image: primeiro-exporter:0.1
-    ports:
-      - 8895:8895
-    networks:
-      - backend

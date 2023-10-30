@@ -117,7 +117,7 @@ Resources:
           usermod -a -G docker ssm-user  
           cd /home/ssm-user
           git clone https://github.com/rafae1f/Observability.git
-          rm -rf Observability/stack-aula.yml Observability/README.md Observability/tree.png Observability/Dashboards
+          rm -rf Observability/stack-aula.yml Observability/README.md Observability/tree.png Observability/Dashboards Observability/exporters/apiastronauta/FLUXO.txt Observability/exporters/http/FLUXO_HTTP.txt 
           mv Observability/* .
           rm -rf Observability
           
