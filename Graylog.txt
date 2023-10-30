@@ -1,0 +1,47 @@
+01: 
+sudo sysctl -w vm.max_map_count=262144;
+
+
+02: docker run --name mongo -d mongo:3
+
+
+03:
+docker run --name elasticsearch \
+    -e "http.host=0.0.0.0" \
+    -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+    -d docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
+
+
+04: 
+docker run -d --name graylog \
+ --hostname graylog-server \
+ --restart=always \
+ --link mongo \
+ --link elasticsearch \
+ -p 9000:9000 -p 12201:12201 -p 1514:1514 -p 1514:1514/udp \
+ -e GRAYLOG_HTTP_EXTERNAL_URI="http://3.95.135.139:9000/" \
+ graylog/graylog:4.0;
+
+
+05: Obter IP do Graylog Localmente:
+docker inspect ssm-user-graylog-1 | grep IPAddress
+
+
+
+06: Deploy NGINX expondo Logs ao Graylog:
+  web:
+    image: nginx
+    ports:
+      - 8888:80
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "tcp://IP_ADDRESS_GRAYLOG:12201"
+        tag: nginxdeploy
+
+
+07: Acessando o Graylog:
+http://IP_AWS:9000/search
+
+
+
