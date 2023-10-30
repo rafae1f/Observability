@@ -2,7 +2,8 @@
 sudo sysctl -w vm.max_map_count=262144;
 
 
-02: docker run --name mongo -d mongo:3
+02:
+docker run --name mongo -d mongo:3
 
 
 03:
