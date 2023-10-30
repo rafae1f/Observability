@@ -2,8 +2,7 @@
 sudo sysctl -w vm.max_map_count=262144;
 
 
-02:
-docker run --name mongo -d mongo:3
+02: docker run --name mongo -d mongo:3
 
 
 03:
@@ -20,7 +19,7 @@ docker run -d --name graylog \
  --link mongo \
  --link elasticsearch \
  -p 9000:9000 -p 12201:12201 -p 1514:1514 -p 1514:1514/udp \
- -e GRAYLOG_HTTP_EXTERNAL_URI="http://3.95.135.139:9000/" \
+ -e GRAYLOG_HTTP_EXTERNAL_URI="http://IP_AWS:9000/" \
  graylog/graylog:4.0;
 
 
