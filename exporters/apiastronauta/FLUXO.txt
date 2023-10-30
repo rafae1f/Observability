@@ -7,7 +7,7 @@ Passo 03: Criar o Dockerfile (conteudo)
 Passo 04: Criar a imagem com o código abaixo:
 docker build -f Dockerfile . -t quinto-exporter:0.1
 
-Passo 05:  Validar que a imagem foi criada:
+Passo 05: Validar que a imagem foi criada:
 docker images
 
 Passo 06: Adicionar a chamada para essa imagem no docker-compose (conteudo)
