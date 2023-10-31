@@ -105,27 +105,35 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           yum update -y
-          amazon-linux-extras install docker -y
+          yum install -y telnet -y
+          yum install -y nc
+          yum install -y rsyslog
+          yum install -y git 
+          amazon-linux-extras install -y docker
+          
           service docker start
           systemctl enable docker
           curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
-          yum install git -y
+          
           adduser -m ssm-user
           tee /etc/sudoers.d/ssm-agent-users <<'EOF'
           ssm-user ALL=(ALL) NOPASSWD:ALL
           EOF
           chmod 440 /etc/sudoers.d/ssm-agent-users           
-          usermod -a -G docker ssm-user
+          usermod -aG docker ssm-user
+          
           cd /home/ssm-user
           git clone https://github.com/rafae1f/Observability.git
           mv Observability/* .
-          rm -rf stack-aula.yml README.md tree.png Dashboards exporters/apiastronauta/FLUXO.txt exporters/http/FLUXO_HTTP.txt Observability
-          sysctl -w vm.max_map_count=262144;
+          rm -rf stack-aula.yml README.md tree.png Dashboards exporters/apiastronauta/FLUXO.txt exporters/http/FLUXO_HTTP.txt Observability 
+          
+          sysctl -w vm.max_map_count=262144
           echo "INSTANCE_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > .env
-          docker-compose up -d
-          yum install telnet -y
-          yum install nc -y
+          docker-compose graylog  --env-file .env up -d
+          
+          echo "GRAYLOG_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' root_graylog_1)" >> .env
+          docker-compose  --env-file .env up -d
 
 ################################### STACK OUTPUTS ###################################
 

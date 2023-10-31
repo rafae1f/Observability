@@ -1,8 +1,21 @@
-01: 
+COMANDOS UTEIS:
+docker rm -f $(docker ps -a -q)
+docker container rm -f $(docker container ls -a -q)
+
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}{end}}' id_container
+
+docker build -f Dockerfile . -t primeiro-exporter:0.1
+
+docker container exec -it id bash
+
+========================================================================================
+
+01:
 sudo sysctl -w vm.max_map_count=262144;
 
 
-02: docker run --name mongo -d mongo:3
+02:
+docker run --name mongo -d mongo:3
 
 
 03:
@@ -12,7 +25,7 @@ docker run --name elasticsearch \
     -d docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
 
 
-04: 
+04:
 docker run -d --name graylog \
  --hostname graylog-server \
  --restart=always \
@@ -23,12 +36,14 @@ docker run -d --name graylog \
  graylog/graylog:4.0;
 
 
-05: Obter IP do Graylog Localmente:
+05:
+Obter IP do Graylog Localmente:
 docker inspect ssm-user-graylog-1 | grep IPAddress
 
 
 
-06: Deploy NGINX expondo Logs ao Graylog:
+06:
+Deploy NGINX expondo Logs ao Graylog:
   web:
     image: nginx
     ports:
@@ -44,4 +59,22 @@ docker inspect ssm-user-graylog-1 | grep IPAddress
 http://IP_AWS:9000/search
 
 
+Comandos EC2:
+yum install rsyslog -y
+cd /etc/rsyslog.d/
+vim 21-cloudinit.conf
+*.*                             @@172.17.0.4:12201
+docker ps
+docker inspect idgreylog
+service rsyslog restart
+ls
 
+
+Greylog:
+System / Inputs
+syslog TCP | Launch new input
+Global
+porta 12201
+
+ec2
+logger "LOGS FUNCIONAIS"
