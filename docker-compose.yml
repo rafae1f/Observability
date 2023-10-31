@@ -72,6 +72,9 @@ services:
   graylog:
     image: graylog/graylog:4.0
     hostname: graylog-server
+    depends_on:
+      - mongo
+      - elasticsearch
     ports:
       - "9000:9000"
       - "12201:12201"
@@ -88,6 +91,8 @@ services:
 
   web:
     image: nginx
+    depends_on:
+      - graylog
     ports:
       - "8888:80"
     logging:
