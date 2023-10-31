@@ -71,6 +71,7 @@ services:
 
   graylog:
     image: graylog/graylog:4.0
+    hostname: graylog-server
     ports:
       - "9000:9000"
       - "12201:12201"
