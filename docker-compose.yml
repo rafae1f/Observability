@@ -100,7 +100,6 @@ services:
       options:
         gelf-address: "tcp://${GRAYLOG_IP}:12201"
         tag: nginxdeploy
-    entrypoint: ["bash", "-c", "export GRAYLOG_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' apps-graylog-1) && exec nginx -g 'daemon off;'"]
 
 volumes:
   prometheus-data:
