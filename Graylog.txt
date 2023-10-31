@@ -38,7 +38,7 @@ docker run -d --name graylog \
 
 05:
 Obter IP do Graylog Localmente:
-docker inspect ssm-user-graylog-1 | grep IPAddress
+docker inspect appslogs-graylog-1 | grep IPAddress
 
 
 
